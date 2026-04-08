@@ -602,29 +602,108 @@
       to   { transform: rotate(360deg); }
     }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(28,26,24,0.98);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      nav { padding: 20px 28px; }
-      .nav-links { gap: 24px; }
+      nav { padding: 20px 24px; background: rgba(28,26,24,0.97); }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
       .hero { grid-template-columns: 1fr; }
       .hero-right { display: none; }
-      .hero-left { padding: 120px 28px 80px; }
+      .hero-left { padding: 110px 24px 60px; }
+      .hero-stats { gap: 32px; }
+
       .about { grid-template-columns: 1fr; }
-      .about-visual { min-height: 300px; }
-      .about-content { padding: 60px 28px; }
-      .services { padding: 80px 28px; }
-      .services-header { flex-direction: column; gap: 24px; align-items: flex-start; }
+      .about-visual { min-height: 220px; padding: 48px; }
+      .about-content { padding: 48px 24px; }
+      .qualities { grid-template-columns: 1fr; }
+
+      .services { padding: 64px 24px; }
+      .services-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+      .services-header p { text-align: left; }
       .services-grid { grid-template-columns: 1fr; }
-      .process { padding: 80px 28px; }
-      .process-steps { grid-template-columns: 1fr 1fr; }
+
+      .process { padding: 64px 24px; }
+      .process-steps { grid-template-columns: 1fr 1fr; gap: 40px 16px; }
       .process-steps::before { display: none; }
-      .contact { grid-template-columns: 1fr; gap: 60px; padding: 80px 28px; }
+      .process-step { padding: 0 8px; }
+
+      .contact {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 64px 24px;
+      }
+      .contact-info .section-body { margin-bottom: 32px; }
       .form-row { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 16px; text-align: center; padding: 40px 28px; }
+      .form-submit { width: 100%; text-align: center; justify-content: center; }
+
+      footer {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+        padding: 36px 24px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.6rem; }
+      .hero-tagline { font-size: 1.1rem; }
+      .process-steps { grid-template-columns: 1fr; }
+      .section-title { font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#services" onclick="closeMobileMenu()">Services</a>
+  <a href="#process" onclick="closeMobileMenu()">Process</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -635,6 +714,9 @@
     <li><a href="#process">Process</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <div class="nav-hamburger" id="hamburger" onclick="toggleMobileMenu()">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -892,6 +974,17 @@
 </footer>
 
 <script>
+  function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const burger = document.getElementById('hamburger');
+    menu.classList.toggle('open');
+    burger.classList.toggle('open');
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
   // Build email at runtime to prevent obfuscation
   document.addEventListener('DOMContentLoaded', function() {
     const u = 'jtmac1119';
