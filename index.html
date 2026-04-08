@@ -608,8 +608,11 @@
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
-      padding: 4px;
+      padding: 12px;
+      margin: -12px;
       z-index: 200;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     .nav-hamburger span {
       display: block;
@@ -627,7 +630,7 @@
       position: fixed;
       inset: 0;
       background: rgba(28,26,24,0.98);
-      z-index: 150;
+      z-index: 999;
       flex-direction: column;
       align-items: center;
       justify-content: center;
@@ -984,6 +987,31 @@
     document.getElementById('mobileMenu').classList.remove('open');
     document.getElementById('hamburger').classList.remove('open');
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var burger = document.getElementById('hamburger');
+    var menu = document.getElementById('mobileMenu');
+
+    burger.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMobileMenu();
+    });
+    burger.addEventListener('click', function(e) {
+      e.preventDefault();
+      toggleMobileMenu();
+    });
+
+    menu.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('touchend', function(e) {
+        e.stopPropagation();
+        closeMobileMenu();
+      });
+      link.addEventListener('click', function() {
+        closeMobileMenu();
+      });
+    });
+  });
 
   // Build email at runtime to prevent obfuscation
   document.addEventListener('DOMContentLoaded', function() {
