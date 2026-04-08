@@ -893,11 +893,13 @@
 
 <script>
   // Build email at runtime to prevent obfuscation
-  const u = 'jtmac1119';
-  const d = 'gmail.com';
-  const el = document.getElementById('emailLink');
-  el.href = 'mail' + 'to:' + u + '@' + d;
-  el.textContent = u + '@' + d;
+  document.addEventListener('DOMContentLoaded', function() {
+    const u = 'jtmac1119';
+    const d = 'gmail.com';
+    const el = document.getElementById('emailLink');
+    el.href = 'mail' + 'to:' + u + '@' + d;
+    el.textContent = u + '@' + d;
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
